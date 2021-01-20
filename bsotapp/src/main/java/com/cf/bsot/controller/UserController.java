@@ -27,13 +27,13 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation("获取指定id用户信息")
-    @GetMapping("/{id}")
-    public Result getUserInfoById(@PathVariable("id") @ApiParam("用户id") Long id){
+    @GetMapping("/info")
+    public Result getUserInfoById(@RequestParam("id") @ApiParam("用户id") Long id){
         return Result.success(userService.getUserById(id));
     }
 
     @ApiOperation("分页带条件获取所有用户的信息列表")
-    @GetMapping("/list/{page}/{size}")
+    @GetMapping("/list/info")
     public Result<PageResult> pageListUsersInfo(@PathVariable("page") @ApiParam("页码") Integer page,
                                                 @PathVariable("size") @ApiParam("数量") Integer size){
         User searchUser = new User();
