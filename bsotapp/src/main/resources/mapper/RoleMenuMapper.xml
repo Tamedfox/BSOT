@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cf.bsot.mapper.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.cf.bsot.model.pojo.RoleMenuRel">
+        <result column="role_id" jdbcType="BIGINT" property="roleId" />
+        <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        role_id, menu_id
+    </sql>
+
+    <delete id="deleteMenuByRoleId" parameterType="Long">
+      delete from p_bsot_role_menu_rel where role_id = #{id}
+    </delete>
+
+    <insert id="addRoleMenuRel">
+        insert into p_bsot_role_menu_rel (role_id,menu_id) values
+        <foreach collection="menuIds" item="menuId" separator=",">
+            (#{roleId},#{menuId})
+        </foreach>
+    </insert>
+</mapper>

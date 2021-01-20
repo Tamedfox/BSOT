@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cf.bsot.mapper.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.cf.bsot.model.pojo.UserRoleRel">
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, role_id
+    </sql>
+
+    <delete id="deleteRoleByUserId" parameterType="Long">
+      delete from p_bsot_user_role_rel where user_id = #{userId}
+    </delete>
+
+    <insert id="addUserRoleRel">
+        insert into p_bsot_user_role_rel (user_id,role_id) values
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{userId},#{roleId})
+        </foreach>
+    </insert>
+</mapper>
