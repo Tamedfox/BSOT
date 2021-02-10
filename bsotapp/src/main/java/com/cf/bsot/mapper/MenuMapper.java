@@ -20,4 +20,6 @@ public interface MenuMapper {
     int insertMenu(Menu menu);
 
     List<Menu> getAllUrlMenus();
+
+    List<Menu> getAllMenus();
 }

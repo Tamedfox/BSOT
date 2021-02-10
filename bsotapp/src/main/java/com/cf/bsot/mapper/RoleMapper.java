@@ -21,4 +21,6 @@ public interface RoleMapper {
     int insertRole(Role role);
 
     List<Menu> getMenusByRoleId(Long roleId);
+
+    List<Role> pageListRoleInfo(Role role);
 }

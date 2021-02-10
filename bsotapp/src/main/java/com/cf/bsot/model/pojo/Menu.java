@@ -1,6 +1,7 @@
 package com.cf.bsot.model.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author cf
@@ -33,9 +34,13 @@ public class Menu implements Serializable {
 
     private String icon;
 
+    private String title;
+
     private Integer status;
 
     private Integer orderSeq;
+
+    private List<Menu> children;
 
     public Long getId() {
         return id;
@@ -133,6 +138,14 @@ public class Menu implements Serializable {
         this.icon = icon;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -149,6 +162,14 @@ public class Menu implements Serializable {
         this.orderSeq = orderSeq;
     }
 
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
@@ -161,11 +182,13 @@ public class Menu implements Serializable {
                 ", type='" + type + '\'' +
                 ", component='" + component + '\'' +
                 ", redirect='" + redirect + '\'' +
-                ", affix='" + affix + '\'' +
-                ", noCache='" + noCache + '\'' +
+                ", affix=" + affix +
+                ", noCache=" + noCache +
                 ", icon='" + icon + '\'' +
+                ", title='" + title + '\'' +
                 ", status=" + status +
                 ", orderSeq=" + orderSeq +
+                ", children=" + children +
                 '}';
     }
 }

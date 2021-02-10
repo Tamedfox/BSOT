@@ -10,6 +10,15 @@ import java.util.Date;
  */
 public class User implements Serializable {
 
+    public User() {
+    }
+
+    public User(String username, String email, Integer status) {
+        this.username = username;
+        this.email = email;
+        this.status = status;
+    }
+
     private Long id;
 
     private String username;

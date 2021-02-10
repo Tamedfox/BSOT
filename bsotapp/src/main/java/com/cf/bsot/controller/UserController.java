@@ -27,70 +27,73 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation("获取指定id用户信息")
-    @GetMapping("/info")
-    public Result getUserInfoById(@RequestParam("id") @ApiParam("用户id") Long id){
+    @GetMapping("/detail")
+    public Result getUserInfoById(@RequestParam("id") @ApiParam("用户id") Long id) {
         return Result.success(userService.getUserById(id));
     }
 
     @ApiOperation("分页带条件获取所有用户的信息列表")
     @GetMapping("/list/info")
-    public Result<PageResult> pageListUsersInfo(@PathVariable("page") @ApiParam("页码") Integer page,
-                                                @PathVariable("size") @ApiParam("数量") Integer size){
-        User searchUser = new User();
-        List<User> pageUsers = userService.pageListUserInfo(page,size,searchUser);
+    public Result pageListUsersInfo(@RequestParam(value = "page", defaultValue = "1") @ApiParam("页码") Integer page,
+                                    @RequestParam(value = "size", defaultValue = "10") @ApiParam("数量") Integer size,
+                                    @RequestParam(value = "username") @ApiParam("用户名") String username,
+                                    @RequestParam(value = "email") @ApiParam("邮箱") String email,
+                                    @RequestParam(value = "status", defaultValue = "") @ApiParam("状态") Integer status) {
+        User searchUser = new User(username,email,status);
+        List<User> pageUsers = userService.pageListUserInfo(page, size, searchUser);
         return Result.success(PageResult.transPage(pageUsers));
     }
 
     @ApiOperation("添加用户信息")
-    @PostMapping("")
-    public Result addUserInfo(@RequestBody @ApiParam("用户信息") User user){
+    @PostMapping("/add")
+    public Result addUserInfo(@RequestBody @ApiParam("用户信息") User user) {
         Integer result = userService.addUserInfo(user);
-        if(OperateConstant.SUCCESS.equals(result)){
+        if (OperateConstant.SUCCESS.equals(result)) {
             return Result.success();
-        }else {
+        } else {
             return Result.failed();
         }
     }
 
     @ApiOperation("删除指定id用户信息")
-    @DeleteMapping("/{id}")
-    public Result deleteUserInfoById(@PathVariable("id") @ApiParam("用户id") Long id) {
+    @GetMapping("/del")
+    public Result deleteUserInfoById(@RequestParam("id") @ApiParam("用户id") Long id) {
         Integer result = userService.deleteUserById(id);
-        if(OperateConstant.SUCCESS.equals(result)){
+        if (OperateConstant.SUCCESS.equals(result)) {
             return Result.success();
-        }else {
+        } else {
             return Result.failed();
         }
     }
 
     @ApiOperation("更新指定id用户信息")
-    @PutMapping("")
-    public Result updateUserInfo(@RequestBody @ApiParam("用户信息") User user){
+    @PostMapping("/update")
+    public Result updateUserInfo(@RequestBody @ApiParam("用户信息") User user) {
         Integer result = userService.updateUserById(user);
-        if(OperateConstant.SUCCESS.equals(result)){
+        if (OperateConstant.SUCCESS.equals(result)) {
             return Result.success();
-        }else {
+        } else {
             return Result.failed();
         }
     }
 
     @ApiOperation("获取指定id用户的角色信息")
-    @GetMapping("/roles/{id}")
-    public Result getRolesInfoByUserId(@PathVariable("id") @ApiParam("用户id") Long id){
+    @GetMapping("/roles")
+    public Result getRolesInfoByUserId(@RequestParam("id") @ApiParam("用户id") Long id) {
         return Result.success(userService.getRolesByUserId(id));
     }
 
-    @ApiOperation("获取指定id用户的权限信息")
-    @GetMapping("/menus/{id}")
-    public Result getMenusInfoByUserId(@PathVariable("id") @ApiParam("用户id") Long id){
+    @ApiOperation("获取指定id用户的菜单信息")
+    @GetMapping("/menus")
+    public Result getMenusInfoByUserId(@RequestParam("id") @ApiParam("用户id") Long id) {
         return Result.success(userService.getMenusByUserId(id));
     }
 
     @ApiOperation("分配指定id用户的角色信息")
-    @PutMapping("/role/update")
+    @GetMapping("/role/update")
     public Result updateUserRoleRel(@RequestParam("userId") @ApiParam("用户id") Long userId,
-                             @RequestParam("roleIds") @ApiParam("所有角色id") Long[] roleIds){
-        if(userService.updateUserRoleRelInfo(userId,roleIds)){
+                                    @RequestParam("roleIds") @ApiParam("所有角色id") Long[] roleIds) {
+        if (userService.updateUserRoleRelInfo(userId, roleIds)) {
             return Result.success();
         } else {
             return Result.failed();
@@ -99,7 +102,7 @@ public class UserController {
 
     @ApiOperation("获取指定用户的菜单信息")
     @GetMapping("/list/nav")
-    public Result getNavListByUsername(){
+    public Result getNavListByUsername() {
         return Result.success(userService.getNavListByUsername());
     }
 

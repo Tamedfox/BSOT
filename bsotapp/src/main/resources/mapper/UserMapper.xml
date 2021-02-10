@@ -39,7 +39,11 @@
         <where>
             <if test="username != null and username !=''">
                 <bind name="searchUsername" value="'%' + username + '%'" />
-                and username = #{searchUsername}
+                and username LIKE #{searchUsername}
+            </if>
+            <if test="email != null and email !=''">
+                <bind name="searchEmail" value="'%' + email + '%'" />
+                and email LIKE #{searchEmail}
             </if>
             <if test="status != null">
                 and status = #{status}
@@ -61,22 +65,22 @@
         update p_bsot_user
         <set>
             <if test="username != null">
-                name = #{name}
+                username = #{username},
             </if>
             <if test="icon != null">
-                icon = #{icon}
+                icon = #{icon},
             </if>
             <if test="email != null">
-                email = #{email}
+                email = #{email},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime}
+                create_time = #{createTime},
             </if>
             <if test="lastLoginTime != null">
-                last_login_time = #{lastLoginTime}
+                last_login_time = #{lastLoginTime},
             </if>
             <if test="status != null">
-                status = #{status}
+                status = #{status},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

@@ -4,9 +4,11 @@ import com.cf.bsot.mapper.RoleMapper;
 import com.cf.bsot.mapper.RoleMenuMapper;
 import com.cf.bsot.model.pojo.Menu;
 import com.cf.bsot.model.pojo.Role;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +34,7 @@ public class RoleService {
     }
 
     public Integer updateRoleInfo(Role role){
+        role.setUpdateTime(new Date());
         return roleMapper.updateByPrimaryKeySelective(role);
     }
 
@@ -46,5 +49,14 @@ public class RoleService {
 
     public List<Menu> getMenusByRoleId(Long roleId) {
         return roleMapper.getMenusByRoleId(roleId);
+    }
+
+    public List<Role> pageListUserInfo(Integer page, Integer size, Role searchRole) {
+        PageHelper.startPage(page,size);
+        return roleMapper.pageListRoleInfo(searchRole);
+    }
+
+    public List<Role> listRoleInfo() {
+        return roleMapper.pageListRoleInfo(null);
     }
 }

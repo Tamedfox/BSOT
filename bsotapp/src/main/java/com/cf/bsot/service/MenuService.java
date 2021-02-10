@@ -1,10 +1,12 @@
 package com.cf.bsot.service;
 
+import com.cf.bsot.common.utils.TreeUtils;
 import com.cf.bsot.mapper.MenuMapper;
 import com.cf.bsot.model.pojo.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -36,5 +38,10 @@ public class MenuService {
 
     public List<Menu> getAllQueryMenus() {
         return menuMapper.getAllUrlMenus();
+    }
+
+    public Collection getTreeMenuListInfo() {
+        List<Menu> menus = menuMapper.getAllMenus();
+        return TreeUtils.toTree(menus,"id","parentId","children", Menu.class);
     }
 }

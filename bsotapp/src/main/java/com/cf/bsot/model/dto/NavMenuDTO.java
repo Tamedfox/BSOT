@@ -52,6 +52,8 @@ public class NavMenuDTO {
      */
     private NavMenuMetaDTO meta;
 
+    private List<NavMenuDTO> children;
+
     public Long getId() {
         return id;
     }
@@ -139,8 +141,6 @@ public class NavMenuDTO {
     public void setMeta(NavMenuMetaDTO meta) {
         this.meta = meta;
     }
-
-    private List<NavMenuDTO> children;
 
     public List<NavMenuDTO> getChildren() {
         return children;

@@ -34,7 +34,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         List<Menu> menus = menuService.getAllQueryMenus();
         configAttributeMap = new HashMap<>(16);
         for (Menu menu : menus) {
-            configAttributeMap.put(menu.getMethod() + ":" + menu.getPath(),new SecurityConfig(menu.getMethod()));
+            configAttributeMap.put(menu.getPath(),new SecurityConfig(menu.getPath()));
         }
     }
 
@@ -47,7 +47,6 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
         //获取当前访问路径
         String requestUrl = ((FilterInvocation) o).getRequest().getRequestURI();
         String requestMethod = ((FilterInvocation) o).getRequest().getMethod();
-        requestUrl = requestMethod + ":" + requestUrl;
         AntPathMatcher antPathMatcher = new AntPathMatcher();
         Iterator<String> menusIterator = configAttributeMap.keySet().iterator();
         while(menusIterator.hasNext()){

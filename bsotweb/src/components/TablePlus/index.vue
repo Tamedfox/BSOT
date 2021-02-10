@@ -76,7 +76,9 @@ export default {
   methods: {
     loadData(currPage, pageSize, params) {
       this.listLoading = true
-      this.requestUrl(currPage, pageSize, params).then((response) => {
+      params.page = currPage
+      params.size = pageSize
+      this.requestUrl(params).then((response) => {
         this.tableData = response.data.rows
         this.page.total = response.data.total
         this.listLoading = false
@@ -99,7 +101,7 @@ export default {
     }
   },
   mounted() {
-    this.loadData(this.page.currPage, this.page.pageSize, null)
+    this.loadData(this.page.currPage, this.page.pageSize, this.searchParams)
   }
 }
 </script>

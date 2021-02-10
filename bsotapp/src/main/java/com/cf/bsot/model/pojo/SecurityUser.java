@@ -30,7 +30,7 @@ public class SecurityUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (Menu menu: menuList) {
-            authorities.add(new SimpleGrantedAuthority(menu.getMethod() + ":" + menu.getPath()));
+            authorities.add(new SimpleGrantedAuthority(menu.getPath()));
         }
         return authorities;
     }

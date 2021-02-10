@@ -155,6 +155,7 @@ public class UserService implements UserDetailsService {
         LoginUserInfoDTO userInfo = new LoginUserInfoDTO();
         userInfo.setName(user.getUsername());
         userInfo.setAvatar(user.getIcon());
+        userInfo.setId(user.getId());
         List<Role> roles = userMapper.getRolesByUserId(user.getId());
         List<String> rolesList = new ArrayList<>(16);
         String rolesStr = "";

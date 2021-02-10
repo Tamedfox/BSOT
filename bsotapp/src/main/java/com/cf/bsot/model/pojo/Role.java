@@ -10,6 +10,14 @@ import java.util.Date;
  */
 public class Role implements Serializable {
 
+    public Role() {
+    }
+
+    public Role(String name, Integer status) {
+        this.name = name;
+        this.status = status;
+    }
+
     private Long id;
 
     private String name;

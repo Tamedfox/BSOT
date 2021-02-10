@@ -24,7 +24,7 @@ public class MenuController {
     private MenuService menuService;
 
     @ApiOperation("添加权限信息")
-    @PostMapping("")
+    @PostMapping("/add")
     public Result addMenuInfo(@RequestBody @ApiParam("权限信息") Menu menu){
         Integer result = menuService.addMenuInfo(menu);
         if(OperateConstant.SUCCESS.equals(result)){
@@ -35,8 +35,8 @@ public class MenuController {
     }
 
     @ApiOperation("删除指定id权限信息")
-    @DeleteMapping("/{id}")
-    public Result deleteMenuInfoById(@PathVariable("id") @ApiParam("权限id") Long id) {
+    @GetMapping("/del")
+    public Result deleteMenuInfoById(@RequestParam("id") @ApiParam("权限id") Long id) {
         Integer result = menuService.deleteMenuInfoById(id);
         if(OperateConstant.SUCCESS.equals(result)){
             return Result.success();
@@ -46,7 +46,7 @@ public class MenuController {
     }
 
     @ApiOperation("更新指定id用户信息")
-    @PutMapping("")
+    @PostMapping("/update")
     public Result updateMenuInfo(@RequestBody @ApiParam("权限信息") Menu menu){
         Integer result = menuService.updateMenuInfo(menu);
         if(OperateConstant.SUCCESS.equals(result)){
@@ -57,9 +57,15 @@ public class MenuController {
     }
 
     @ApiOperation("获取指定id权限信息")
-    @GetMapping("/{id}")
-    public Result getMenuInfoById(@PathVariable("id") @ApiParam("权限id") Long id){
+    @GetMapping("/detail")
+    public Result getMenuInfoById(@RequestParam("id") @ApiParam("权限id") Long id){
         return Result.success(menuService.getMenuInfoById(id));
+    }
+
+    @ApiOperation("获取树形菜单信息")
+    @GetMapping("/tree")
+    public Result getTreeMenuInfo(){
+        return Result.success(menuService.getTreeMenuListInfo());
     }
 
 }

@@ -7,11 +7,21 @@ package com.cf.bsot.model.dto;
  */
 public class LoginUserInfoDTO {
 
+    private Long id;
+
     private String name;
 
     private String avatar;
 
     private String roles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -40,7 +50,8 @@ public class LoginUserInfoDTO {
     @Override
     public String toString() {
         return "LoginUserInfoDTO{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", roles='" + roles + '\'' +
                 '}';

@@ -73,4 +73,19 @@
             ORDER BY m.order_seq
     </select>
 
+    <select id="pageListRoleInfo" resultMap="BaseResultMap" parameterType="Role">
+      select
+        <include refid="Base_Column_List" />
+      from p_bsot_role
+      <where>
+          <if test="name != null and name !=''">
+              <bind name="searchName" value="'%' + name + '%'" />
+              and name like #{searchName}
+          </if>
+          <if test="status != null">
+              and status = #{status}
+          </if>
+      </where>
+        ORDER BY order_seq asc
+    </select>
 </mapper>
