@@ -20,4 +20,10 @@ public interface QuartzJobMapper {
     Integer updateQuartzJobInfoSelective(QuartzJob quartzJobInfo);
 
     List<QuartzJob> getJobListByOpenStatus();
+
+    List<QuartzJob> getJobPageList(QuartzJob searchQuartzJob);
+
+    Integer setStatusStop(Long id);
+
+    Integer setStatusRun(Long id);
 }

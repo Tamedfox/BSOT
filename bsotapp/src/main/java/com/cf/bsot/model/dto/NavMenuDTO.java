@@ -38,6 +38,11 @@ public class NavMenuDTO {
     private Boolean affix;
 
     /**
+     * 是否隐藏
+     */
+    private Boolean hidden;
+
+    /**
      * icon需要设置为前端反馈的meta.icon
      */
     private String icon;
@@ -118,6 +123,14 @@ public class NavMenuDTO {
         this.noCache = noCache;
     }
 
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
     public Boolean getAffix() {
         return affix;
     }
@@ -161,6 +174,7 @@ public class NavMenuDTO {
                 ", redirect='" + redirect + '\'' +
                 ", noCache=" + noCache +
                 ", affix=" + affix +
+                ", hidden=" + hidden +
                 ", icon='" + icon + '\'' +
                 ", title='" + title + '\'' +
                 ", meta=" + meta +

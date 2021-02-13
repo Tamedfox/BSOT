@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-dialog :visible="visible" :title="dialogType==='Edit' ? '编辑角色' : '添加角色'" @close="closeDialog" width="40%">
+    <el-dialog :visible="visible" :title="dialogType==='Edit' ? '编辑角色' : '添加角色'" @close="closeDialog" width="40%" @open="open">
       <el-form :model="roleData" label-width="80px" ref="roleInfoDialog">
         <el-form-item label="角色名称" prop="name">
           <el-input placeholder="请输入角色名称" v-model="roleData.name"></el-input>
@@ -16,7 +16,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单">
-          <el-tree ref="tree" :data="menuTreeData" :props="defaultProps" :default-checked-keys="menuIds" show-checkbox node-key="id" class="permission-tree">
+          <el-tree ref="tree" :data="menuTreeData" :check-strictly="checkStrictly" :props="defaultProps" :default-checked-keys="menuIds" show-checkbox node-key="id" class="permission-tree">
            <span class="custom-tree-node" slot-scope="{ node, data }">
              <span style="width: 100px">{{ node.label }}</span>
              <span style="width: 150px">{{ data.path }}</span>
@@ -61,6 +61,7 @@ export default {
         children: 'children',
         label: 'name'
       },
+      checkStrictly: false,
       menuTreeData: [],
       menuIds: []
     }
@@ -70,11 +71,24 @@ export default {
       userId: state => state.user.userId
     })
   },
-  created() {
-    this.getMenuTreeData()
-    this.getRoleMenusIds()
-  },
   methods: {
+    open() {
+      this.getMenuTreeData()
+      this.getRoleMenusIds()
+    },
+    generateArr(menus) {
+      let data = []
+      menus.forEach(menu => {
+        data.push(menu)
+        if (menu.children) {
+          const temp = this.generateArr(menu.children)
+          if (temp.length > 0) {
+            data = [...data, ...temp]
+          }
+        }
+      })
+      return data
+    },
     getMenuTreeData() {
       getMenuTreeListInfo().then((response) => {
         this.menuTreeData = response.data
@@ -83,8 +97,10 @@ export default {
     getRoleMenusIds() {
       getRoleMenusInfo(this.userId).then((response) => {
         const menusInfo = response.data
-        menusInfo.forEach((menu) => {
-          this.menuIds.push(menu.id)
+        this.checkStrictly = true
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedNodes(this.generateArr(menusInfo))
+          this.checkStrictly = false
         })
       })
     },

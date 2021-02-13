@@ -15,13 +15,14 @@
         <result column="affix" jdbcType="INTEGER" property="affix" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="no_cache" jdbcType="INTEGER" property="noCache" />
+        <result column="hidden" jdbcType="INTEGER" property="hidden" />
         <result column="icon" jdbcType="VARCHAR" property="icon" />
         <result column="status" jdbcType="BIT" property="status" />
         <result column="order_seq" jdbcType="INTEGER" property="orderSeq" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, parent_id, name, description, path, method, type, component, redirect, affix, title, no_cache, icon, status, order_seq
+        id, parent_id, name, description, path, method, type, component, redirect, affix, hidden, title, no_cache, icon, status, order_seq
     </sql>
 
     <select id="getMenuByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
@@ -69,6 +70,9 @@
             <if test="noCache != null">
                 no_cache = #{noCache,jdbcType=INTEGER},
             </if>
+            <if test="hidden != null">
+                hidden = #{hidden,jdbcType=INTEGER},
+            </if>
             <if test="icon != null">
                 icon = #{icon,jdbcType=VARCHAR},
             </if>
@@ -87,11 +91,11 @@
 
     <insert id="insertMenu" parameterType="Menu">
         insert into p_bsot_menu (parent_id, name,
-          description, path, method, type, component, redirect, affix, title, no_cache, icon,
+          description, path, method, type, component, redirect, affix, hidden, title, no_cache, icon,
           status, order_seq)
         values (#{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
           #{description,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
-          #{redirect,jdbcType=VARCHAR}, #{affix,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{noCache,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR},
+          #{redirect,jdbcType=VARCHAR}, #{affix,jdbcType=INTEGER}, #{hidden,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{noCache,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR},
           #{status,jdbcType=BIT}, #{orderSeq,jdbcType=INTEGER})
     </insert>
 

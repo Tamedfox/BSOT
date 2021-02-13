@@ -156,6 +156,7 @@
           m.component,
           m.redirect,
           m.affix,
+          m.hidden,
           m.no_cache as noCache,
           m.status,
           m.order_seq as orderSeq

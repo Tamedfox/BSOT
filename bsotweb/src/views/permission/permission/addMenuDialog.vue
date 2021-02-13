@@ -54,6 +54,12 @@
         <el-form-item label="菜单组件" prop="component" v-if="menuType">
           <el-input placeholder="请输入菜单组件" v-model="menuData.component"></el-input>
         </el-form-item>
+        <el-form-item label="是否隐藏" prop="hidden">
+          <el-radio-group v-model="menuData.hidden">
+            <el-radio :label="0">禁用</el-radio>
+            <el-radio :label="1">启用</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="菜单固定" prop="affix" v-if="menuType">
           <el-switch v-model="menuData.affix" :active-value="1" :inactive-value="0" active-color="#13ce66"
                      inactive-color="#ff4949"></el-switch>
@@ -131,7 +137,9 @@ export default {
             type: 'success',
             message: '保存成功!'
           })
-          this.$emit('loadMenuListInfo')
+          this.$emit('refreshMenuInfo')
+        }).catch((error) => {
+          console.log(error)
         })
       } else {
         addMenuInfo(this.menuData).then((response) => {
@@ -139,7 +147,7 @@ export default {
             type: 'success',
             message: '添加成功!'
           })
-          this.$emit('refreshRoleInfo')
+          this.$emit('refreshMenuInfo')
         }).catch((error) => {
           console.log(error)
         })

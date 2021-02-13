@@ -46,8 +46,8 @@ public class QuartzManager {
             scheduler.scheduleJob(jobDetail, cronTrigger);
 
             // 暂停任务
-            if (OperateConstant.SUCCESS.equals(quartzJob.getIsStop())) {
-                pauseJob(quartzJob);
+            if (OperateConstant.FAIL.equals(quartzJob.getIsStop())) {
+                pauseJob(quartzJob.getJobId());
             }
         } catch (SchedulerException e) {
             logger.error("创建定时任务失败",e.getMessage());
@@ -56,16 +56,19 @@ public class QuartzManager {
 
     /**
      * 删除当前定时任务
-     * @param quartzJob
+     * @param jobId
      */
-    public void deleteJob(QuartzJob quartzJob){
+    public void deleteJob(Long jobId){
         JobKey jobKey;
         try {
-            jobKey = JobKey.jobKey(JOB_NAME + quartzJob.getJobId());
+            jobKey = JobKey.jobKey(JOB_NAME + jobId);
+            TriggerKey triggerKey = TriggerKey.triggerKey(String.valueOf(jobKey));
+            scheduler.pauseTrigger(triggerKey);
+            scheduler.unscheduleJob(triggerKey);
             scheduler.pauseJob(jobKey);
             scheduler.deleteJob(jobKey);
         } catch (SchedulerException e) {
-            logger.error("定时任务 {} 删除失败!{}",quartzJob.getJobId(), e.getMessage());
+            logger.error("定时任务 {} 删除失败!{}",jobId, e.getMessage());
         }
     }
 
@@ -111,15 +114,25 @@ public class QuartzManager {
 
     /**
      * 暂停当前定时任务
-     * @param quartzJob
+     * @param jobId
      */
-    public void pauseJob(QuartzJob quartzJob) {
+    public void pauseJob(Long jobId) {
         try {
-            JobKey jobKey = JobKey.jobKey(JOB_NAME + quartzJob.getJobId());
+            JobKey jobKey = JobKey.jobKey(JOB_NAME + jobId);
             scheduler.pauseJob(jobKey);
         } catch (SchedulerException e) {
-            logger.error("定时任务 {} 暂停执行失败!{}",quartzJob.getJobId(), e.getMessage());
+            logger.error("定时任务 {} 暂停执行失败!{}",jobId, e.getMessage());
         }
     }
 
+    public Boolean checkJobExists(Long jobId) {
+        JobKey jobKey = JobKey.jobKey(JOB_NAME + jobId);
+        Boolean result = null;
+        try {
+            result = scheduler.checkExists(jobKey);
+        } catch (SchedulerException e) {
+            logger.error("定时任务 {} 检查是否存在执行失败!{}",jobId, e.getMessage());
+        }
+        return result;
+    }
 }

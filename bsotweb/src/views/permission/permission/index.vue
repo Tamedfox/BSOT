@@ -3,7 +3,7 @@
 
     <el-button type="primary" size="small" @click="menuAdd">添加菜单</el-button>
 
-    <el-table :data="menuTreeData" row-key="id" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}" class="table-tree">
+    <el-table ref="menuTable" :data="menuTreeData" row-key="id" border :tree-props="{children: 'children', hasChildren: 'hasChildren'}" class="table-tree" :loadMenuListInfo="loadMenuListInfo">
       <el-table-column prop="id" label="id" sortable width="110px"/>
       <el-table-column prop="parentId" label="父项id" width="50px">
         <template slot-scope="{ row }">

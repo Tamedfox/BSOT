@@ -1,6 +1,5 @@
 package com.cf.bsot.model.pojo;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  * @version 1.0
  * @date 2020/9/15 23:25
  */
-public class Menu implements Serializable {
+public class Menu implements Comparable<Menu> {
 
     private Long id;
 
@@ -31,6 +30,8 @@ public class Menu implements Serializable {
     private Integer affix;
 
     private Integer noCache;
+
+    private Integer hidden;
 
     private String icon;
 
@@ -122,6 +123,14 @@ public class Menu implements Serializable {
         this.affix = affix;
     }
 
+    public Integer getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Integer hidden) {
+        this.hidden = hidden;
+    }
+
     public Integer getNoCache() {
         return noCache;
     }
@@ -184,11 +193,17 @@ public class Menu implements Serializable {
                 ", redirect='" + redirect + '\'' +
                 ", affix=" + affix +
                 ", noCache=" + noCache +
+                ", hidden=" + hidden +
                 ", icon='" + icon + '\'' +
                 ", title='" + title + '\'' +
                 ", status=" + status +
                 ", orderSeq=" + orderSeq +
                 ", children=" + children +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Menu menu) {
+        return this.orderSeq - menu.orderSeq;
     }
 }

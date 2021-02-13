@@ -21,7 +21,7 @@ mybatis:
 logging:
   level:
     root: info
-    com.cf.bsot.mapper: debug
+#    com.cf.bsot.mapper: debug
 
 jwt:
   tokenHeader: Authorization

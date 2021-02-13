@@ -8,7 +8,7 @@
         <el-option label="无效" value="0" />
       </el-select>
       <el-button class="filter-item" type="primary" icon="el-icon-search" @click="searchListData">
-        Search
+        搜索
       </el-button>
     </div>
 
@@ -39,7 +39,7 @@
 
 <script>
 import TablePlus from '@/components/TablePlus/index'
-import { gerUserInfoList, delUserInfo, getUserRolesInfo } from '@/api/user'
+import { gerUserInfoList, delUserInfo } from '@/api/user'
 import AddUserDialog from './addUserDialog'
 import EditUserRolesDialog from './editUserRolesDialog'
 

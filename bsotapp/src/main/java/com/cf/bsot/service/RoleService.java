@@ -1,5 +1,6 @@
 package com.cf.bsot.service;
 
+import com.cf.bsot.common.utils.TreeUtils;
 import com.cf.bsot.mapper.RoleMapper;
 import com.cf.bsot.mapper.RoleMenuMapper;
 import com.cf.bsot.model.pojo.Menu;
@@ -8,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +49,9 @@ public class RoleService {
         return roleMenuMapper.addRoleMenuRel(roleId,menuIds) == menuIds.length;
     }
 
-    public List<Menu> getMenusByRoleId(Long roleId) {
-        return roleMapper.getMenusByRoleId(roleId);
+    public Collection<Menu> getMenusByRoleId(Long roleId) {
+        List<Menu> menus = roleMapper.getMenusByRoleId(roleId);
+        return TreeUtils.toTree(menus,"id","parentId", "children", Menu.class);
     }
 
     public List<Role> pageListUserInfo(Integer page, Integer size, Role searchRole) {

@@ -47,7 +47,7 @@ export default {
     },
     requestUrl: {
       type: Function,
-      default: () => {}
+      default: null
     },
     paginationShow: {
       type: Boolean,
@@ -81,11 +81,10 @@ export default {
       this.requestUrl(params).then((response) => {
         this.tableData = response.data.rows
         this.page.total = response.data.total
-        this.listLoading = false
       }).catch(err => {
         console.log(err)
-        this.listLoading = false
       })
+      this.listLoading = false
     },
     paramsLoadData() {
       this.page.currPage = 1

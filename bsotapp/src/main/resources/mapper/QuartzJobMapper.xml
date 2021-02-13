@@ -106,10 +106,24 @@
         where job_id = #{jobId,jdbcType=BIGINT}
     </update>
 
+    <select id="getJobPageList" resultMap="BaseResultMap">
+        select
+          <include refid="Base_Column_List" />
+        from s_bsot_quartz_job
+    </select>
+
     <select id="getJobListByOpenStatus" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+          <include refid="Base_Column_List" />
         from s_bsot_quartz_job
-        where is_stop = '0'
+        where is_stop = '1'
     </select>
+
+    <update id="setStatusStop" parameterType="Long">
+      UPDATE s_bsot_quartz_job SET is_stop = '0' WHERE job_id = #{jobId,jdbcType=BIGINT}
+    </update>
+
+    <update id="setStatusRun" parameterType="Long">
+      UPDATE s_bsot_quartz_job SET is_stop = '1' WHERE job_id = #{jobId,jdbcType=BIGINT}
+    </update>
 </mapper>
